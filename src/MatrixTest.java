@@ -159,6 +159,7 @@ public class MatrixTest {
         mat = new double[][]{ {1,2,3,3}, {4,5,6,2}, {7,2,7,7}, {1,6,5,2} };
         compareArraysDouble(new double[][]{{-1.55, -0.63, 0.60, 0.84}, {-1.84, -1.10, 0.68, 1.47}, {2.81, 1.78, -1.13, -2.05}, {-0.74, -0.84, 0.47, 0.79}},
                 Matrix.invert(mat), 0.01);
+
     }
 
     @Test
@@ -178,6 +179,9 @@ public class MatrixTest {
 
         double[][] mat2 = { {2,-1,6,10}, {-3,4,-5,11}, {8,-7,-9,12} };
         compare(new double[]{10.63, 10.58, -0.11}, Matrix.cramer(mat2));
+
+        double[][] mat3 = { {1,1,1,6}, {1,2,5,12}, {1,4,25,36}};
+        compare(new double[]{3,2,1}, Matrix.cramer(mat3));
     }
 
     @Test

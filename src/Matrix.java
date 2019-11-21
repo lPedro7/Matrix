@@ -483,52 +483,60 @@ public class Matrix {
 
         double[][] inc = new double[mat.length][1];
 
-
+        /*
+            A cofs afegirem els operands, com la dimensió de cofs és 1 més petit que mat,
+            les dues matrius no seràn iguals
+         */
         for (int i = 0; i < cofs.length; i++) {
             for (int j = 0; j < cofs[0].length; j++) {
                 cofs[i][j] = mat[i][j];
             }
         }
 
+        //Afegim també la darrera columna de la matriu original a inc
         for (int i = 0; i < inc.length; i++) {
             inc[i][0] = mat[i][mat[0].length - 1];
         }
 
+        //Obtenim el determinant de la matriu cofs
         double detA = determinant(cofs);
+
+        //En el cas de que el determinant sigui 0, no podem continuar, per tant retornarem null
         if (detA == 0) return null;
 
-
+        /*
+            El métode que empra el test de Cramer és anar sustituint cada una de les columnes de la matriu
+            cofs per la matriu inc, una vegada ho hem substituit, haurem de treure el determinant d'aquesta
+            nova matriu, i finalment dividir aquest determinant pel determinant original, així per cadascuna
+            de les columnes anirem treguent cada incògnita
+         */
         for (int i = 0; i < cofs.length; i++) {
 
+            //Declaram la columna que sustituirem
             double[][] mat2 = new double[cofs.length][cofs[0].length];
 
+            //Afegim els valors de la matriu cofs
             for (int j = 0; j < mat2.length; j++) {
                 for (int k = 0; k < mat2[0].length; k++) {
                     mat2[j][k] = cofs[j][k];
                 }
             }
 
-
+            //Sustituim els valors per la matriu inc
             for (int j = 0; j < cofs[0].length; j++) {
-
-
                 mat2[j][i] = inc[j][0];
-
             }
-            System.out.println("Matriz con incognita " + i);
-            printMat(mat2);
-            System.out.println();
+            //Feim la divisió i ho emmagatzemam a l'array d'incògnites
             res[i] = determinant(mat2) / detA;
         }
 
-        for (int i = 0; i < res.length; i++) {
-            System.out.println(res[i]);
-        }
-
+        //Retornam l'array d'incògnites
         return res;
     }
 
-    // Funció que mostra una matriu per pantalla
+    /*
+        Mostra una matriu per pantalla
+     */
     static void printMat(double[][] mat) {
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
